@@ -1,0 +1,15 @@
+<launch>
+  <!-- Synthetic input bypasses acquisition and FAST-LIO; no robot connection. -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="offline_torso"
+        args="0 0 0 0 0 0 odom_corrected torso_link" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="offline_torso_world"
+        args="0 0 0 0 0 0 torso_link torso_link_world" />
+  <node pkg="elevation_mapping_demos" type="pc_filter.py" name="pc_filter" />
+  <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+    <rosparam command="load" file="$(find elevation_mapping_demos)/config/robots/simple_demo_robot.yaml" />
+    <rosparam command="load" file="$(find elevation_mapping_demos)/config/postprocessing/postprocessor_pipeline.yaml" />
+    <param name="robot_pose_with_covariance_topic" value="" />
+    <param name="min_update_rate" value="2" />
+    <param name="fused_map_publishing_rate" value="2" />
+  </node>
+</launch>

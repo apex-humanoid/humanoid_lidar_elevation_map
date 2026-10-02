@@ -1,0 +1,20 @@
+<launch>
+  <!-- Complete MID-360 acquisition, odometry, and elevation-mapping pipeline. -->
+  <include file="$(find livox_ros_driver2)/launch_ROS1/msg_MID360.launch" />
+  <include file="$(find fast_lio)/launch/mapping_mid360.launch" />
+  <include file="$(find pose_publisher)/launch/pose_publisher.launch">
+    <arg name="map_frame" value="odom_corrected" />
+  </include>
+
+  <node pkg="elevation_mapping_demos" type="pc_filter.py" name="pc_filter" />
+  <node pkg="elevation_mapping_demos" type="publish_map_frame.py" name="publish_map_frame" />
+  <node pkg="elevation_mapping_demos" type="gravity_correction_publisher.py" name="gravity_correction_publisher" />
+
+  <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+    <!-- The MID-360 input source selects its own perfect sensor processor. -->
+    <rosparam command="load" file="$(find elevation_mapping_demos)/config/robots/simple_demo_robot.yaml" />
+    <rosparam command="load" file="$(find elevation_mapping_demos)/config/postprocessing/postprocessor_pipeline.yaml" />
+  </node>
+
+  <include file="$(find elevation_mapping_demos)/launch/visualization.launch" />
+</launch>

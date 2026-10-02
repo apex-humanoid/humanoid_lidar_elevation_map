@@ -1,0 +1,36 @@
+# Build products and local ROS workspace configuration.
+build/
+devel/
+install/
+logs/
+.catkin_tools/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+*.o
+*.a
+*.so
+*.so.*
+
+# Python caches and local environments.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Recorded sensor data and generated FAST-LIO output.
+/ws_map/src/elevation_mapping_humanoid/fast_lio_mid360/Log/*.txt
+/ws_map/src/elevation_mapping_humanoid/fast_lio_mid360/PCD/*.pcd
+*.bag
+*.bag.active
+
+# Machine-local settings and editor files.
+.env
+.env.*
+!.env.example
+.DS_Store
+*.swp
+*.swo
+*~
